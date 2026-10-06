@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MAMHOI factorizes scene-aware human-object interaction generation through motion affordances.">
+  <meta name="theme-color" content="#f6f7fb"><title>MAMHOI | Factorizing Scene-Aware Human-Object Interaction Through Affordances</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"><script defer src="js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside class="side-nav" aria-label="Section navigation">
+    <a href="#abstract" data-section-link="abstract"><span>01</span>Abstract</a>
+    <a href="#video" data-section-link="video"><span>02</span>Video</a>
+    <a href="#comparison" data-section-link="comparison"><span>03</span>Comparison</a>
+    <a href="#motivation" data-section-link="motivation"><span>04</span>Motivation</a>
+    <a href="#method" data-section-link="method"><span>05</span>Method</a>
+  </aside>
+
+  <main id="main">
+    <section class="hero shell reveal">
+      <h1><span>MAMHOI</span>: Factorizing Scene-Aware Human–Object Interaction Through Affordances</h1>
+      <p class="dek">An affordance-mediated formulation that connects scene-level interaction feasibility with detailed human–object motion synthesis.</p>
+      <div class="author-block">
+        <p class="author-list">
+          <span>MingYuan Lei<sup>1</sup></span>
+          <span>Tat-Jen Cham<sup>1</sup></span>
+          <span>Yoonchang Sung<sup>1</sup></span>
+        </p>
+        <p class="affiliation-list">
+          <sup>1</sup><a href="https://www.ntu.edu.sg/" target="_blank" rel="noopener noreferrer">Nanyang Technological University</a>
+        </p>
+      </div>
+      <div class="action-row" aria-label="Project resources">
+        <a class="pill" href="https://arxiv.org/" data-placeholder-link><span aria-hidden="true">↗</span> arXiv</a>
+        <a class="pill" href="assets/videos/project-video.mp4"><span aria-hidden="true">▶</span> Video</a>
+        <a class="pill" href="https://github.com/" data-placeholder-link><span aria-hidden="true">⌘</span> Code</a>
+      </div>
+    </section>
+
+    <section class="section shell paper-section reveal" id="abstract" data-section="abstract">
+      <div class="section-heading academic-heading"><h2>Abstract</h2></div>
+      <div class="abstract-copy">
+        <p>Generating realistic human–object interactions in complex 3D scenes requires two complementary capabilities: reasoning about interaction feasibility in the environment and synthesizing realistic human–object motion. Supervision for these capabilities, however, is rarely available jointly at scale.</p>
+        <p>We present <strong>MAMHOI</strong>, an affordance-mediated factorization for scene-aware human–object interaction generation. A scene-conditioned model first predicts where and how an interaction can be feasibly executed. An affordance-conditioned HOI model then generates the corresponding synchronized human–object motion. This formulation enables scene understanding and interaction dynamics to be learned from complementary sources of supervision without requiring paired human–object–scene data.</p>
+        <p>Experiments in complex indoor environments show that MAMHOI reduces object–scene penetration while preserving human–object interaction quality, producing more realistic and physically feasible scene-aware interactions.</p>
+      </div>
+      <figure class="media-frame png-frame teaser-frame"><img src="assets/images/teaser_image.png" width="4000" height="2250" alt="MAMHOI transfers scene-free human-object interaction priors to complex scenes through scene-aware motion affordances" decoding="async"></figure>
+      <p class="caption"><strong>MAMHOI</strong> transfers scene-free HOI priors to complex environments through scene-aware motion affordances.</p>
+    </section>
+
+    <section class="section video-section" id="video" data-section="video"><div class="shell reveal">
+      <div class="section-heading academic-heading"><h2>Video</h2></div>
+      <div class="project-video"><video controls playsinline preload="metadata"><source src="assets/videos/project-video.mp4" type="video/mp4">Your browser does not support embedded MP4 video.</video><p class="caption">The video presents the formulation, model behavior, and representative results in complex indoor scenes.</p></div>
+    </div></section>
+
+    <section class="section comparison-section" id="comparison" data-section="comparison"><div class="shell reveal">
+      <div class="section-heading academic-heading"><h2>Qualitative Comparison</h2><p>Generated interactions under identical scene, object, and task conditions.</p></div>
+      <div class="comparison-carousel" role="region" aria-roledescription="carousel" aria-label="Qualitative video comparisons">
+        <div class="comparison-toolbar"><button class="carousel-button" id="comparison-prev" type="button" aria-label="Previous comparison">←</button><div class="prompt-block"><span>Language instruction</span><p id="comparison-prompt">“Pick up the object, Move the object and put the object down”</p></div><button class="carousel-button" id="comparison-next" type="button" aria-label="Next comparison">→</button></div>
+        <div class="comparison" aria-live="polite"><div class="comparison-row">
+          <figure class="comparison-item"><div class="comparison-cell"><video muted loop playsinline autoplay preload="metadata" data-method="CHOIS"></video></div><figcaption>CHOIS</figcaption></figure>
+          <figure class="comparison-item"><div class="comparison-cell"><video muted loop playsinline autoplay preload="metadata" data-method="InfBagel"></video></div><figcaption>InfBaGel</figcaption></figure>
+          <figure class="comparison-item ours-item"><div class="comparison-cell"><video muted loop playsinline autoplay preload="metadata" data-method="Ours"></video></div><figcaption>Ours</figcaption></figure>
+        </div></div>
+        <div class="carousel-status"><span id="comparison-group-name">cropped_largebox</span><span id="comparison-counter">1 / 18</span></div><div class="carousel-dots" id="comparison-dots" aria-label="Choose comparison group"></div>
+      </div>
+    </div></section>
+
+    <section class="section shell paper-section reveal" id="motivation" data-section="motivation">
+      <div class="section-heading academic-heading"><h2>Motivation</h2></div>
+      <div class="motivation-grid">
+        <div class="motivation-statement"><p>Scene-aware HOI generation must determine both <em>where an interaction is physically feasible</em> and <em>how the human and object should move together</em>. Yet the strongest supervision for these two capabilities comes from different datasets.</p></div>
+        <div class="evidence-list">
+          <article><span>A</span><div><h3>Scene understanding</h3><p>Human–scene datasets provide environment-aware motion but lack detailed object manipulation dynamics.</p></div></article>
+          <article><span>B</span><div><h3>Interaction synthesis</h3><p>Human–object datasets capture rich contact and manipulation behavior but are typically scene-free.</p></div></article>
+          <article><span>C</span><div><h3>Modeling objective</h3><p>A useful representation must transfer scene constraints without overwriting the interaction distribution learned from motion-rich HOI data.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section method-section" id="method" data-section="method"><div class="shell reveal">
+      <div class="section-heading academic-heading academic-heading--dark"><h2>Method</h2><p>MAMHOI separates scene understanding from human–object motion synthesis through a sequence-level motion affordance.</p></div>
+      <figure class="media-frame png-frame framework-frame"><img src="assets/images/framework_image.png" width="4000" height="2250" alt="MAMHOI framework with scene-to-affordance and affordance-to-HOI-motion factors" loading="lazy" decoding="async"></figure>
+      <div class="factor-grid">
+        <article class="factor-card factor-card--where"><div class="factor-index">FACTOR I · SCENE → AFFORDANCE</div><h3>Scene understanding</h3><p>An affordance denoising network predicts task-specific feasible regions from scene geometry, the planned object path, and the language instruction.</p><ul><li>Learned from indoor HSI data</li><li>Task-relevant spatial constraints</li><li>Sequence-level motion affordance</li></ul></article>
+        <article class="factor-card factor-card--how"><div class="factor-index">FACTOR II · AFFORDANCE → HOI MOTION</div><h3>Affordance-guided synthesis</h3><p>Local occupancy around the human, object, and goal is encoded as affordance features that condition a diffusion-based human–object motion generator.</p><ul><li>Learned from scene-free HOI data</li><li>Contact-aware interaction dynamics</li><li>Segment-wise scene adaptation</li></ul></article>
+      </div>
+    </div></section>
+
+  </main>
+  <footer><div class="shell"><p>MAMHOI Project Page</p><a href="#top">Back to top ↑</a></div></footer>
+</body>
+</html>
