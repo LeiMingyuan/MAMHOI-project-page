@@ -58,7 +58,7 @@
     <section class="section comparison-section" id="comparison" data-section="comparison"><div class="shell reveal">
       <div class="section-heading academic-heading"><h2>Qualitative Comparison</h2><p>Generated interactions under identical scene, object, and task conditions.</p></div>
       <div class="comparison-carousel" role="region" aria-roledescription="carousel" aria-label="Qualitative video comparisons">
-        <div class="comparison-toolbar"><button class="carousel-button" id="comparison-prev" type="button" aria-label="Previous comparison">←</button><div class="prompt-block"><span>Language instruction</span><p id="comparison-prompt">“Pick up the object, Move the object and put the object down”</p></div><button class="carousel-button" id="comparison-next" type="button" aria-label="Next comparison">→</button></div>
+        <div class="comparison-toolbar"><button class="carousel-button" id="comparison-prev" type="button" aria-label="Previous comparison">←</button><div class="prompt-block"><span>Language instruction</span><p id="comparison-prompt">“Pick up the large box, walk between the sofas and the table, and place it down.”</p></div><button class="carousel-button" id="comparison-next" type="button" aria-label="Next comparison">→</button></div>
         <div class="comparison" aria-live="polite"><div class="comparison-row">
           <figure class="comparison-item"><div class="comparison-cell"><video muted loop playsinline autoplay preload="metadata" data-method="CHOIS"></video></div><figcaption><span>CHOIS</span><cite>Li et al., ECCV 2024</cite></figcaption></figure>
           <figure class="comparison-item"><div class="comparison-cell"><video muted loop playsinline autoplay preload="metadata" data-method="InfBagel"></video></div><figcaption><span>InfBaGel</span><cite>Zou et al., ICLR 2026</cite></figcaption></figure>
@@ -68,9 +68,9 @@
               <div class="affordance-layer" aria-hidden="true">
                 <video class="compare-video compare-video--affordance" muted loop playsinline autoplay preload="metadata" data-affordance></video>
               </div>
-              <span class="compare-view-label compare-view-label--affordance">Affordance</span>
-              <span class="compare-view-label compare-view-label--normal">Normal</span>
-              <div class="compare-divider" aria-hidden="true"><span>↔</span></div>
+              <button class="compare-view-label compare-view-label--affordance" type="button" data-affordance-view="100" aria-label="Show full affordance view">Affordance</button>
+              <button class="compare-view-label compare-view-label--normal" type="button" data-affordance-view="0" aria-label="Show full normal view">Normal</button>
+              <div class="compare-divider" id="affordance-divider" role="slider" tabindex="0" aria-label="Affordance comparison split" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="50% affordance"><span aria-hidden="true">↔</span></div>
             </div>
             <figcaption><span>Ours</span><div class="affordance-control"><label for="affordance-slider">Show affordance</label><input id="affordance-slider" type="range" min="0" max="100" value="50" aria-label="Show affordance" aria-valuetext="50% affordance"></div></figcaption>
           </figure>

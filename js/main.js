@@ -68,7 +68,21 @@ const comparisonGroups = [
   'demo-25_path-003_whitechair'
 ];
 
-const comparisonPrompt = 'Pick up the object, Move the object and put the object down';
+const comparisonPrompts = [
+  'Pick up the large box, walk between the sofas and the table, and place it down.',
+  'Lift the large table, carry it to the corner, and place it down.',
+  'Pick up the small box, carry it into the corner, and place it down.',
+  'Lift the clothes stand, carry it into the next room, and place it beside the sofa.',
+  'Pick up the large box, carry it around the table once, and place it down.',
+  'Pick up the large box, carry it around the table once, and place it down.',
+  'Pick up the large box, carry it around the sofa, and place it beside the door.',
+  'Lift the clothes stand, carry it past the table, and place it beside the door.',
+  'Lift the floor lamp, carry it through the space between the sofa and the table, and place it beside the door.',
+  'Lift the large table, carry it to the other side of the bed, and place it down.',
+  'Pick up the large box, carry it through the chairs, and place it on the other side of the table.',
+  'Lift the table, move it to the bedside, and place it down.',
+  'Pick up the chair, move it to the bedside, and place it down.'
+];
 const comparisonVideos = [...document.querySelectorAll('[data-method]')];
 const comparisonCounter = document.querySelector('#comparison-counter');
 const comparisonGroupName = document.querySelector('#comparison-group-name');
@@ -78,12 +92,62 @@ const affordanceVideo = document.querySelector('[data-affordance]');
 const oursVideo = document.querySelector('[data-method="Ours"]');
 const affordanceCompare = document.querySelector('#affordance-compare');
 const affordanceSlider = document.querySelector('#affordance-slider');
+const affordanceDivider = document.querySelector('#affordance-divider');
+const affordanceViewButtons = [...document.querySelectorAll('[data-affordance-view]')];
 let activeComparison = 0;
 
+function setAffordanceSplit(value) {
+  const clampedValue = Math.max(0, Math.min(100, Number(value)));
+  affordanceCompare?.style.setProperty('--affordance-split', `${clampedValue}%`);
+  if (affordanceSlider) {
+    affordanceSlider.value = String(clampedValue);
+    affordanceSlider.setAttribute('aria-valuetext', `${Math.round(clampedValue)}% affordance`);
+  }
+  if (affordanceDivider) {
+    affordanceDivider.setAttribute('aria-valuenow', String(Math.round(clampedValue)));
+    affordanceDivider.setAttribute('aria-valuetext', `${Math.round(clampedValue)}% affordance`);
+  }
+  affordanceViewButtons.forEach((button) => {
+    button.setAttribute('aria-pressed', String(Number(button.dataset.affordanceView) === clampedValue));
+  });
+}
+
 affordanceSlider?.addEventListener('input', () => {
-  const value = Number(affordanceSlider.value);
-  affordanceCompare?.style.setProperty('--affordance-split', `${value}%`);
-  affordanceSlider.setAttribute('aria-valuetext', `${value}% affordance`);
+  setAffordanceSplit(affordanceSlider.value);
+});
+
+function setSplitFromPointer(event) {
+  if (!affordanceCompare) return;
+  const bounds = affordanceCompare.getBoundingClientRect();
+  setAffordanceSplit(((event.clientX - bounds.left) / bounds.width) * 100);
+}
+
+affordanceDivider?.addEventListener('pointerdown', (event) => {
+  event.preventDefault();
+  affordanceDivider.setPointerCapture(event.pointerId);
+  affordanceDivider.classList.add('is-dragging');
+  setSplitFromPointer(event);
+});
+affordanceDivider?.addEventListener('pointermove', (event) => {
+  if (affordanceDivider.hasPointerCapture(event.pointerId)) setSplitFromPointer(event);
+});
+affordanceDivider?.addEventListener('pointerup', (event) => {
+  if (affordanceDivider.hasPointerCapture(event.pointerId)) affordanceDivider.releasePointerCapture(event.pointerId);
+  affordanceDivider.classList.remove('is-dragging');
+});
+affordanceDivider?.addEventListener('pointercancel', () => affordanceDivider.classList.remove('is-dragging'));
+affordanceDivider?.addEventListener('keydown', (event) => {
+  const currentValue = Number(affordanceSlider?.value ?? 50);
+  if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') setAffordanceSplit(currentValue - 2);
+  else if (event.key === 'ArrowRight' || event.key === 'ArrowUp') setAffordanceSplit(currentValue + 2);
+  else if (event.key === 'Home') setAffordanceSplit(0);
+  else if (event.key === 'End') setAffordanceSplit(100);
+  else return;
+  event.preventDefault();
+});
+
+affordanceViewButtons.forEach((button) => {
+  button.addEventListener('click', () => setAffordanceSplit(button.dataset.affordanceView));
 });
 
 function syncAffordanceVideo(force = false) {
@@ -132,7 +196,7 @@ function showComparison(index) {
   comparisonVideos.forEach((video) => video.play().catch(() => {}));
   affordanceVideo?.play().catch(() => {});
 
-  if (comparisonPromptNode) comparisonPromptNode.textContent = `“${comparisonPrompt}”`;
+  if (comparisonPromptNode) comparisonPromptNode.textContent = `“${comparisonPrompts[activeComparison]}”`;
   if (comparisonGroupName) comparisonGroupName.textContent = group;
   if (comparisonCounter) comparisonCounter.textContent = `${activeComparison + 1} / ${comparisonGroups.length}`;
   document.querySelectorAll('.carousel-dot').forEach((dot, dotIndex) => {
