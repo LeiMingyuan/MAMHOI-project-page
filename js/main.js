@@ -53,24 +53,19 @@ document.querySelector('.copy-button')?.addEventListener('click', async (event) 
 });
 
 const comparisonGroups = [
-  'cropped_largebox',
-  'cropped_smallbox',
   'demo-21_path-000_largebox',
   'demo-21_path-003_largetable',
   'demo-21_path-003_smallbox',
   'demo-21_path-005_clothesstand',
   'demo-21_path-008_largebox',
-  'demo-21_path-008_whitechair',
   'demo-22_path-000_largebox',
   'demo-22_path-002_largebox',
   'demo-22_path-003_clothesstand',
   'demo-22_path-004_floorlamp',
   'demo-22_path-008_largetable',
   'demo-25_path-001_largebox',
-  'demo-25_path-001_smallbox',
   'demo-25_path-003_largetable',
-  'demo-25_path-003_whitechair',
-  'demo-25_path-005_floorlamp'
+  'demo-25_path-003_whitechair'
 ];
 
 const comparisonPrompt = 'Pick up the object, Move the object and put the object down';
@@ -79,7 +74,36 @@ const comparisonCounter = document.querySelector('#comparison-counter');
 const comparisonGroupName = document.querySelector('#comparison-group-name');
 const comparisonPromptNode = document.querySelector('#comparison-prompt');
 const comparisonDots = document.querySelector('#comparison-dots');
+const affordanceVideo = document.querySelector('[data-affordance]');
+const oursVideo = document.querySelector('[data-method="Ours"]');
+const affordanceCompare = document.querySelector('#affordance-compare');
+const affordanceSlider = document.querySelector('#affordance-slider');
 let activeComparison = 0;
+
+affordanceSlider?.addEventListener('input', () => {
+  const value = Number(affordanceSlider.value);
+  affordanceCompare?.style.setProperty('--affordance-split', `${value}%`);
+  affordanceSlider.setAttribute('aria-valuetext', `${value}% affordance`);
+});
+
+function syncAffordanceVideo(force = false) {
+  if (!oursVideo || !affordanceVideo || !Number.isFinite(oursVideo.currentTime)) return;
+  const drift = Math.abs(affordanceVideo.currentTime - oursVideo.currentTime);
+  if (force || drift > 0.08) affordanceVideo.currentTime = oursVideo.currentTime;
+  affordanceVideo.playbackRate = oursVideo.playbackRate;
+}
+
+oursVideo?.addEventListener('play', () => {
+  syncAffordanceVideo(true);
+  affordanceVideo?.play().catch(() => {});
+});
+oursVideo?.addEventListener('pause', () => affordanceVideo?.pause());
+oursVideo?.addEventListener('seeking', () => syncAffordanceVideo(true));
+oursVideo?.addEventListener('ratechange', () => syncAffordanceVideo());
+affordanceVideo?.addEventListener('loadedmetadata', () => syncAffordanceVideo(true));
+window.setInterval(() => {
+  if (oursVideo && !oursVideo.paused) syncAffordanceVideo();
+}, 250);
 
 comparisonGroups.forEach((group, index) => {
   const dot = document.createElement('button');
@@ -98,8 +122,15 @@ function showComparison(index) {
     const method = video.dataset.method;
     video.src = `assets/videos/comparison/${group}/${method}_penetration.mp4`;
     video.load();
-    video.play().catch(() => {});
   });
+
+  if (affordanceVideo) {
+    affordanceVideo.src = `assets/videos/comparison/${group}/Ours_penetration_affordance.mp4`;
+    affordanceVideo.load();
+  }
+
+  comparisonVideos.forEach((video) => video.play().catch(() => {}));
+  affordanceVideo?.play().catch(() => {});
 
   if (comparisonPromptNode) comparisonPromptNode.textContent = `“${comparisonPrompt}”`;
   if (comparisonGroupName) comparisonGroupName.textContent = group;

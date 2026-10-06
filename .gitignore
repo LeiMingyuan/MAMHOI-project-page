@@ -1,1 +1,3 @@
 paper/*.pdf
+assets/images/*.pdf
+RENDER_REGENERATION_SPEC.md
