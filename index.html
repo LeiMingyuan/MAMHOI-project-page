@@ -24,18 +24,19 @@
       <p class="dek">An affordance-mediated formulation that connects scene-level interaction feasibility with detailed human–object motion synthesis.</p>
       <div class="author-block">
         <p class="author-list">
-          <span>MingYuan Lei<sup>1</sup></span>
-          <span>Tat-Jen Cham<sup>1</sup></span>
-          <span>Yoonchang Sung<sup>1</sup></span>
+          <span>Mingyuan Lei</span>
+          <span>Yoonchang Sung</span>
+          <span>Tat-Jen Cham</span>
         </p>
         <p class="affiliation-list">
-          <sup>1</sup><a href="https://www.ntu.edu.sg/" target="_blank" rel="noopener noreferrer">Nanyang Technological University</a>
+          <span>College of Computing and Data Science</span><br>
+          <span>Nanyang Technological University, Singapore</span>
         </p>
       </div>
       <div class="action-row" aria-label="Project resources">
         <a class="pill" href="https://arxiv.org/" data-placeholder-link><span aria-hidden="true">↗</span> arXiv</a>
         <a class="pill" href="assets/videos/project-video.mp4"><span aria-hidden="true">▶</span> Video</a>
-        <a class="pill" href="https://github.com/" data-placeholder-link><span aria-hidden="true">⌘</span> Code</a>
+        <a class="pill" href="https://github.com/LeiMingyuan/MAMHOI" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">⌘</span> Code (Coming Soon)</a>
       </div>
     </section>
 
@@ -68,14 +69,15 @@
               <div class="affordance-layer" aria-hidden="true">
                 <video class="compare-video compare-video--affordance" muted loop playsinline autoplay preload="metadata" data-affordance></video>
               </div>
-              <button class="compare-view-label compare-view-label--affordance" type="button" data-affordance-view="100" aria-label="Show full affordance view">Affordance</button>
+              <button class="compare-view-label compare-view-label--affordance" type="button" data-affordance-view="100" aria-label="Show the full view with the affordance overlay">Showing affordance</button>
               <button class="compare-view-label compare-view-label--normal" type="button" data-affordance-view="0" aria-label="Show full normal view">Normal</button>
               <div class="compare-divider" id="affordance-divider" role="slider" tabindex="0" aria-label="Affordance comparison split" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="50% affordance"><span aria-hidden="true">↔</span></div>
             </div>
             <figcaption><span>Ours</span><div class="affordance-control"><label for="affordance-slider">Show affordance</label><input id="affordance-slider" type="range" min="0" max="100" value="50" aria-label="Show affordance" aria-valuetext="50% affordance"></div></figcaption>
           </figure>
         </div></div>
-        <div class="carousel-status"><span id="comparison-group-name">demo-21_path-000_largebox</span><span id="comparison-counter">1 / 13</span></div><div class="carousel-dots" id="comparison-dots" aria-label="Choose comparison group"></div>
+        <p class="affordance-explanation"><strong>Visualization guide.</strong> The translucent colored regions show MAMHOI’s predicted motion affordance—the task-relevant scene regions estimated to support a feasible interaction. Both sides display the same generated motion: the left includes the affordance overlay, while the right shows the normal rendering. Yellow-to-red flashes on the human body or object indicate scene penetration, with yellow denoting lower penetration and red denoting higher penetration.</p>
+        <div class="carousel-status"><span id="comparison-counter">1 / 13</span></div><div class="carousel-dots" id="comparison-dots" aria-label="Choose comparison group"></div>
       </div>
     </div></section>
 

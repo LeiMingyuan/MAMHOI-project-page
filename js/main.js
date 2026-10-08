@@ -85,7 +85,6 @@ const comparisonPrompts = [
 ];
 const comparisonVideos = [...document.querySelectorAll('[data-method]')];
 const comparisonCounter = document.querySelector('#comparison-counter');
-const comparisonGroupName = document.querySelector('#comparison-group-name');
 const comparisonPromptNode = document.querySelector('#comparison-prompt');
 const comparisonDots = document.querySelector('#comparison-dots');
 const affordanceVideo = document.querySelector('[data-affordance]');
@@ -197,7 +196,6 @@ function showComparison(index) {
   affordanceVideo?.play().catch(() => {});
 
   if (comparisonPromptNode) comparisonPromptNode.textContent = `“${comparisonPrompts[activeComparison]}”`;
-  if (comparisonGroupName) comparisonGroupName.textContent = group;
   if (comparisonCounter) comparisonCounter.textContent = `${activeComparison + 1} / ${comparisonGroups.length}`;
   document.querySelectorAll('.carousel-dot').forEach((dot, dotIndex) => {
     dot.classList.toggle('is-active', dotIndex === activeComparison);
