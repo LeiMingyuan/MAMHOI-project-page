@@ -29,3 +29,10 @@ body{font-size:1rem}.hero{padding:72px 0 54px}.section{padding:84px 0}[id]{scrol
 .compare-view-label[aria-pressed="true"]{background:rgba(77,62,195,.9);border-color:#fff}
 .affordance-explanation{max-width:900px;margin:18px auto 0;padding:12px 16px;border-left:3px solid var(--violet);background:#f7f6ff;color:var(--muted);font-size:.9rem;line-height:1.55}.affordance-explanation strong{color:var(--ink)}
 .carousel-status{justify-content:flex-end}
+
+.citation-section{background:#f1f3f8;padding-top:72px}
+.citation-section .section-heading{margin-bottom:22px}
+.citation-code{max-width:920px}
+.citation-code pre{white-space:pre-wrap;overflow-wrap:anywhere;padding-right:96px}
+.citation-code code{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace}
+@media (max-width:520px){.citation-code pre{padding-top:58px;padding-right:18px}.citation-code .copy-button{top:14px;right:14px}}
